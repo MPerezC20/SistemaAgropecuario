@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using SistemaAgropecuario.Models;
+using SistemaAgropecuario.Data;
+using MySqlConnector;
 
 namespace SistemaAgropecuario.Forms
 {
@@ -13,44 +15,75 @@ namespace SistemaAgropecuario.Forms
         {
             InitializeComponent();
             LlenarCombobox();
-            CargarDatosEjemplo();
+            CargarDatosEjemplo(); // ahora carga desde la BD
+
+            btnCancelar.Click += btnCancelar_Click;
+
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             LimpiarFormulario();
         }
+
         private void LlenarCombobox()
         {
-            cmbTipoCliente.Items.AddRange(new string[] { "Minorista", "Mayorista", "Distribuidor" });
+            cmbTipoCliente.Items.AddRange(new string[] { "minorista", "mayorista", "distribuidor" });
         }
 
+        // AHORA: carga los clientes desde la tabla 'clientes'
         private void CargarDatosEjemplo()
         {
             clientes.Clear();
 
-            clientes.Add(new Cliente
+            try
             {
-                IdCliente = 1,
-                Nombre = "Juan Pérez",
-                Direccion = "Av. Principal 123",
-                Telefono = "555-1234",
-                Email = "juan@email.com",
-                TipoCliente = "Minorista"
-            });
+                using (var conn = DatabaseConnection.GetConnection())
+                {
+                    conn.Open();
 
-            clientes.Add(new Cliente
+                    string sql = @"
+                        SELECT id_cliente, nombre, direccion, telefono, email,
+                               tipo_cliente, fecha_registro
+                        FROM clientes
+                        WHERE estado = 'activo';";
+
+                    using (var cmd = new MySqlCommand(sql, conn))
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int idxId = reader.GetOrdinal("id_cliente");
+                            int idxNombre = reader.GetOrdinal("nombre");
+                            int idxDireccion = reader.GetOrdinal("direccion");
+                            int idxTelefono = reader.GetOrdinal("telefono");
+                            int idxEmail = reader.GetOrdinal("email");
+                            int idxTipo = reader.GetOrdinal("tipo_cliente");
+                            int idxFecha = reader.GetOrdinal("fecha_registro");
+
+                            var cliente = new Cliente
+                            {
+                                IdCliente = reader.GetInt32(idxId),
+                                Nombre = !reader.IsDBNull(idxNombre) ? reader.GetString(idxNombre) : "",
+                                Direccion = !reader.IsDBNull(idxDireccion) ? reader.GetString(idxDireccion) : "",
+                                Telefono = !reader.IsDBNull(idxTelefono) ? reader.GetString(idxTelefono) : "",
+                                Email = !reader.IsDBNull(idxEmail) ? reader.GetString(idxEmail) : "",
+                                TipoCliente = !reader.IsDBNull(idxTipo) ? reader.GetString(idxTipo) : "",
+                                FechaRegistro = !reader.IsDBNull(idxFecha) ? reader.GetDateTime(idxFecha) : DateTime.Now
+                            };
+
+                            clientes.Add(cliente);
+                        }
+                    }
+                }
+
+                dgvClientes.DataSource = null;
+                dgvClientes.DataSource = clientes;
+            }
+            catch (Exception ex)
             {
-                IdCliente = 2,
-                Nombre = "María García",
-                Direccion = "Calle Secundaria 456",
-                Telefono = "555-5678",
-                Email = "maria@email.com",
-                TipoCliente = "Mayorista"
-            });
-
-            dgvClientes.DataSource = null;
-            dgvClientes.DataSource = clientes;
+                MessageBox.Show("Error al cargar clientes: " + ex.Message);
+            }
         }
 
         private void btnNuevo_Click(object sender, EventArgs e)
@@ -62,22 +95,38 @@ namespace SistemaAgropecuario.Forms
         {
             if (ValidarDatos())
             {
-                var nuevoCliente = new Cliente
+                try
                 {
-                    IdCliente = clientes.Count + 1,
-                    Nombre = txtNombre.Text,
-                    Direccion = txtDireccion.Text,
-                    Telefono = txtTelefono.Text,
-                    Email = txtEmail.Text,
-                    TipoCliente = cmbTipoCliente.Text,
-                    FechaRegistro = DateTime.Now
-                };
+                    using (var conn = DatabaseConnection.GetConnection())
+                    {
+                        conn.Open();
 
-                clientes.Add(nuevoCliente);
+                        string sql = @"
+                            INSERT INTO clientes
+                                (nombre, direccion, telefono, email, tipo_cliente, fecha_registro, estado)
+                            VALUES
+                                (@nombre, @direccion, @telefono, @email, @tipo, NOW(), 'activo');";
 
-                MessageBox.Show("Cliente guardado correctamente", "Éxito");
-                CargarDatosEjemplo();
-                LimpiarFormulario();
+                        using (var cmd = new MySqlCommand(sql, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@nombre", txtNombre.Text);
+                            cmd.Parameters.AddWithValue("@direccion", txtDireccion.Text);
+                            cmd.Parameters.AddWithValue("@telefono", txtTelefono.Text);
+                            cmd.Parameters.AddWithValue("@email", txtEmail.Text);
+                            cmd.Parameters.AddWithValue("@tipo", cmbTipoCliente.Text.ToLower());
+
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+
+                    MessageBox.Show("Cliente guardado correctamente", "Éxito");
+                    CargarDatosEjemplo();
+                    LimpiarFormulario();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al guardar el cliente: " + ex.Message);
+                }
             }
         }
 
@@ -91,10 +140,30 @@ namespace SistemaAgropecuario.Forms
                     if (MessageBox.Show($"¿Eliminar al cliente: {cliente.Nombre}?",
                         "Confirmar", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
-                        clientes.RemoveAll(c => c.IdCliente == cliente.IdCliente);
-                        MessageBox.Show("Cliente eliminado");
-                        CargarDatosEjemplo();
-                        LimpiarFormulario();
+                        try
+                        {
+                            using (var conn = DatabaseConnection.GetConnection())
+                            {
+                                conn.Open();
+
+                                // Puedes cambiar por UPDATE clientes SET estado='inactivo' si quieres baja lógica
+                                string sql = "DELETE FROM clientes WHERE id_cliente = @id;";
+
+                                using (var cmd = new MySqlCommand(sql, conn))
+                                {
+                                    cmd.Parameters.AddWithValue("@id", cliente.IdCliente);
+                                    cmd.ExecuteNonQuery();
+                                }
+                            }
+
+                            MessageBox.Show("Cliente eliminado");
+                            CargarDatosEjemplo();
+                            LimpiarFormulario();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error al eliminar el cliente: " + ex.Message);
+                        }
                     }
                 }
             }
@@ -108,6 +177,14 @@ namespace SistemaAgropecuario.Forms
                 txtNombre.Focus();
                 return false;
             }
+
+            if (string.IsNullOrWhiteSpace(cmbTipoCliente.Text))
+            {
+                MessageBox.Show("El tipo de cliente es obligatorio");
+                cmbTipoCliente.Focus();
+                return false;
+            }
+
             return true;
         }
 
@@ -134,6 +211,11 @@ namespace SistemaAgropecuario.Forms
                     cmbTipoCliente.SelectedItem = cliente.TipoCliente;
                 }
             }
+        }
+
+        private void frmClientes_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -28,194 +28,210 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panelHeader = new System.Windows.Forms.Panel();
-            this.lblTitulo = new System.Windows.Forms.Label();
-            this.panelBotones = new System.Windows.Forms.Panel();
-            this.btnGenerarReporte = new System.Windows.Forms.Button();
-            this.btnActualizar = new System.Windows.Forms.Button();
-            this.dgvInventario = new System.Windows.Forms.DataGridView();
-            this.grpFiltros = new System.Windows.Forms.GroupBox();
-            this.cmbCategoria = new System.Windows.Forms.ComboBox();
-            this.chkStockBajo = new System.Windows.Forms.CheckBox();
-            this.btnFiltrar = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.panelHeader.SuspendLayout();
-            this.panelBotones.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvInventario)).BeginInit();
-            this.grpFiltros.SuspendLayout();
-            this.SuspendLayout();
+            panelHeader = new Panel();
+            lblTitulo = new Label();
+            panelBotones = new Panel();
+            btnGenerarReporte = new Button();
+            btnActualizar = new Button();
+            dgvInventario = new DataGridView();
+            grpFiltros = new GroupBox();
+            cmbCategoria = new ComboBox();
+            chkStockBajo = new CheckBox();
+            btnFiltrar = new Button();
+            label2 = new Label();
+            label1 = new Label();
+            panelHeader.SuspendLayout();
+            panelBotones.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvInventario).BeginInit();
+            grpFiltros.SuspendLayout();
+            SuspendLayout();
             // 
             // panelHeader
             // 
-            this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(139)))), ((int)(((byte)(34)))));
-            this.panelHeader.Controls.Add(this.lblTitulo);
-            this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelHeader.Location = new System.Drawing.Point(0, 0);
-            this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(884, 60);
-            this.panelHeader.TabIndex = 0;
+            panelHeader.BackColor = Color.FromArgb(54, 77, 72); // CAMBIADO a RGB(54, 77, 72)
+            panelHeader.Controls.Add(lblTitulo);
+            panelHeader.Dock = DockStyle.Top;
+            panelHeader.Location = new Point(0, 0);
+            panelHeader.Margin = new Padding(4, 5, 4, 5);
+            panelHeader.Name = "panelHeader";
+            panelHeader.Size = new Size(1179, 92);
+            panelHeader.TabIndex = 0;
             // 
             // lblTitulo
             // 
-            this.lblTitulo.AutoSize = true;
-            this.lblTitulo.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTitulo.ForeColor = System.Drawing.Color.White;
-            this.lblTitulo.Location = new System.Drawing.Point(12, 18);
-            this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(269, 26);
-            this.lblTitulo.TabIndex = 0;
-            this.lblTitulo.Text = "GESTIÓN DE INVENTARIO";
+            lblTitulo.AutoSize = true;
+            lblTitulo.Font = new Font("Arial", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTitulo.ForeColor = Color.White;
+            lblTitulo.Location = new Point(16, 28);
+            lblTitulo.Margin = new Padding(4, 0, 4, 0);
+            lblTitulo.Name = "lblTitulo";
+            lblTitulo.Size = new Size(360, 32);
+            lblTitulo.TabIndex = 0;
+            lblTitulo.Text = "GESTIÓN DE INVENTARIO";
             // 
             // panelBotones
             // 
-            this.panelBotones.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.panelBotones.Controls.Add(this.btnGenerarReporte);
-            this.panelBotones.Controls.Add(this.btnActualizar);
-            this.panelBotones.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelBotones.Location = new System.Drawing.Point(0, 60);
-            this.panelBotones.Name = "panelBotones";
-            this.panelBotones.Size = new System.Drawing.Size(884, 50);
-            this.panelBotones.TabIndex = 1;
+            panelBotones.BackColor = Color.WhiteSmoke;
+            panelBotones.Controls.Add(btnGenerarReporte);
+            panelBotones.Controls.Add(btnActualizar);
+            panelBotones.Dock = DockStyle.Top;
+            panelBotones.Location = new Point(0, 92);
+            panelBotones.Margin = new Padding(4, 5, 4, 5);
+            panelBotones.Name = "panelBotones";
+            panelBotones.Size = new Size(1179, 77);
+            panelBotones.TabIndex = 1;
             // 
             // btnGenerarReporte
             // 
-            this.btnGenerarReporte.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(130)))), ((int)(((byte)(180)))));
-            this.btnGenerarReporte.FlatAppearance.BorderSize = 0;
-            this.btnGenerarReporte.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGenerarReporte.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGenerarReporte.ForeColor = System.Drawing.Color.White;
-            this.btnGenerarReporte.Location = new System.Drawing.Point(110, 10);
-            this.btnGenerarReporte.Name = "btnGenerarReporte";
-            this.btnGenerarReporte.Size = new System.Drawing.Size(150, 30);
-            this.btnGenerarReporte.TabIndex = 1;
-            this.btnGenerarReporte.Text = "GENERAR REPORTE";
-            this.btnGenerarReporte.UseVisualStyleBackColor = false;
-            this.btnGenerarReporte.Click += new System.EventHandler(this.btnGenerarReporte_Click);
+            btnGenerarReporte.BackColor = Color.FromArgb(70, 130, 180);
+            btnGenerarReporte.FlatAppearance.BorderSize = 0;
+            btnGenerarReporte.FlatStyle = FlatStyle.Flat;
+            btnGenerarReporte.Font = new Font("Arial", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnGenerarReporte.ForeColor = Color.White;
+            btnGenerarReporte.Location = new Point(147, 15);
+            btnGenerarReporte.Margin = new Padding(4, 5, 4, 5);
+            btnGenerarReporte.Name = "btnGenerarReporte";
+            btnGenerarReporte.Size = new Size(200, 46);
+            btnGenerarReporte.TabIndex = 1;
+            btnGenerarReporte.Text = "GENERAR REPORTE";
+            btnGenerarReporte.UseVisualStyleBackColor = false;
+            btnGenerarReporte.Click += btnGenerarReporte_Click;
             // 
             // btnActualizar
             // 
-            this.btnActualizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(139)))), ((int)(((byte)(34)))));
-            this.btnActualizar.FlatAppearance.BorderSize = 0;
-            this.btnActualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnActualizar.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnActualizar.ForeColor = System.Drawing.Color.White;
-            this.btnActualizar.Location = new System.Drawing.Point(0, 10);
-            this.btnActualizar.Name = "btnActualizar";
-            this.btnActualizar.Size = new System.Drawing.Size(100, 30);
-            this.btnActualizar.TabIndex = 0;
-            this.btnActualizar.Text = "ACTUALIZAR";
-            this.btnActualizar.UseVisualStyleBackColor = false;
-            this.btnActualizar.Click += new System.EventHandler(this.btnActualizar_Click);
+            btnActualizar.BackColor = Color.FromArgb(54, 77, 72); // CAMBIADO a RGB(54, 77, 72)
+            btnActualizar.FlatAppearance.BorderSize = 0;
+            btnActualizar.FlatStyle = FlatStyle.Flat;
+            btnActualizar.Font = new Font("Arial", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnActualizar.ForeColor = Color.White;
+            btnActualizar.Location = new Point(0, 15);
+            btnActualizar.Margin = new Padding(4, 5, 4, 5);
+            btnActualizar.Name = "btnActualizar";
+            btnActualizar.Size = new Size(133, 46);
+            btnActualizar.TabIndex = 0;
+            btnActualizar.Text = "ACTUALIZAR";
+            btnActualizar.UseVisualStyleBackColor = false;
+            btnActualizar.Click += btnActualizar_Click;
             // 
             // dgvInventario
             // 
-            this.dgvInventario.AllowUserToAddRows = false;
-            this.dgvInventario.AllowUserToDeleteRows = false;
-            this.dgvInventario.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvInventario.BackgroundColor = System.Drawing.Color.White;
-            this.dgvInventario.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvInventario.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvInventario.Location = new System.Drawing.Point(0, 210);
-            this.dgvInventario.Name = "dgvInventario";
-            this.dgvInventario.ReadOnly = true;
-            this.dgvInventario.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvInventario.Size = new System.Drawing.Size(884, 351);
-            this.dgvInventario.TabIndex = 2;
+            dgvInventario.AllowUserToAddRows = false;
+            dgvInventario.AllowUserToDeleteRows = false;
+            dgvInventario.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvInventario.BackgroundColor = Color.White;
+            dgvInventario.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvInventario.Dock = DockStyle.Fill;
+            dgvInventario.Location = new Point(0, 323);
+            dgvInventario.Margin = new Padding(4, 5, 4, 5);
+            dgvInventario.Name = "dgvInventario";
+            dgvInventario.ReadOnly = true;
+            dgvInventario.RowHeadersWidth = 51;
+            dgvInventario.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvInventario.Size = new Size(1179, 540);
+            dgvInventario.TabIndex = 2;
             // 
             // grpFiltros
             // 
-            this.grpFiltros.BackColor = System.Drawing.Color.White;
-            this.grpFiltros.Controls.Add(this.cmbCategoria);
-            this.grpFiltros.Controls.Add(this.chkStockBajo);
-            this.grpFiltros.Controls.Add(this.btnFiltrar);
-            this.grpFiltros.Controls.Add(this.label2);
-            this.grpFiltros.Controls.Add(this.label1);
-            this.grpFiltros.Dock = System.Windows.Forms.DockStyle.Top;
-            this.grpFiltros.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpFiltros.Location = new System.Drawing.Point(0, 110);
-            this.grpFiltros.Name = "grpFiltros";
-            this.grpFiltros.Size = new System.Drawing.Size(884, 100);
-            this.grpFiltros.TabIndex = 3;
-            this.grpFiltros.TabStop = false;
-            this.grpFiltros.Text = "Filtros de Búsqueda";
+            grpFiltros.BackColor = Color.White;
+            grpFiltros.Controls.Add(cmbCategoria);
+            grpFiltros.Controls.Add(chkStockBajo);
+            grpFiltros.Controls.Add(btnFiltrar);
+            grpFiltros.Controls.Add(label2);
+            grpFiltros.Controls.Add(label1);
+            grpFiltros.Dock = DockStyle.Top;
+            grpFiltros.Font = new Font("Arial", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            grpFiltros.Location = new Point(0, 169);
+            grpFiltros.Margin = new Padding(4, 5, 4, 5);
+            grpFiltros.Name = "grpFiltros";
+            grpFiltros.Padding = new Padding(4, 5, 4, 5);
+            grpFiltros.Size = new Size(1179, 154);
+            grpFiltros.TabIndex = 3;
+            grpFiltros.TabStop = false;
+            grpFiltros.Text = "Filtros de Búsqueda";
             // 
             // cmbCategoria
             // 
-            this.cmbCategoria.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbCategoria.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbCategoria.FormattingEnabled = true;
-            this.cmbCategoria.Location = new System.Drawing.Point(150, 30);
-            this.cmbCategoria.Name = "cmbCategoria";
-            this.cmbCategoria.Size = new System.Drawing.Size(200, 23);
-            this.cmbCategoria.TabIndex = 4;
+            cmbCategoria.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbCategoria.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cmbCategoria.FormattingEnabled = true;
+            cmbCategoria.Location = new Point(200, 46);
+            cmbCategoria.Margin = new Padding(4, 5, 4, 5);
+            cmbCategoria.Name = "cmbCategoria";
+            cmbCategoria.Size = new Size(265, 25);
+            cmbCategoria.TabIndex = 4;
             // 
             // chkStockBajo
             // 
-            this.chkStockBajo.AutoSize = true;
-            this.chkStockBajo.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkStockBajo.Location = new System.Drawing.Point(400, 32);
-            this.chkStockBajo.Name = "chkStockBajo";
-            this.chkStockBajo.Size = new System.Drawing.Size(150, 19);
-            this.chkStockBajo.TabIndex = 3;
-            this.chkStockBajo.Text = "Mostrar solo stock bajo";
-            this.chkStockBajo.UseVisualStyleBackColor = true;
+            chkStockBajo.AutoSize = true;
+            chkStockBajo.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            chkStockBajo.Location = new Point(533, 49);
+            chkStockBajo.Margin = new Padding(4, 5, 4, 5);
+            chkStockBajo.Name = "chkStockBajo";
+            chkStockBajo.Size = new Size(180, 21);
+            chkStockBajo.TabIndex = 3;
+            chkStockBajo.Text = "Mostrar solo stock bajo";
+            chkStockBajo.UseVisualStyleBackColor = true;
             // 
             // btnFiltrar
             // 
-            this.btnFiltrar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(117)))), ((int)(((byte)(125)))));
-            this.btnFiltrar.FlatAppearance.BorderSize = 0;
-            this.btnFiltrar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFiltrar.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFiltrar.ForeColor = System.Drawing.Color.White;
-            this.btnFiltrar.Location = new System.Drawing.Point(600, 25);
-            this.btnFiltrar.Name = "btnFiltrar";
-            this.btnFiltrar.Size = new System.Drawing.Size(100, 30);
-            this.btnFiltrar.TabIndex = 2;
-            this.btnFiltrar.Text = "FILTRAR";
-            this.btnFiltrar.UseVisualStyleBackColor = false;
-            this.btnFiltrar.Click += new System.EventHandler(this.btnFiltrar_Click);
+            btnFiltrar.BackColor = Color.FromArgb(108, 117, 125);
+            btnFiltrar.FlatAppearance.BorderSize = 0;
+            btnFiltrar.FlatStyle = FlatStyle.Flat;
+            btnFiltrar.Font = new Font("Arial", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnFiltrar.ForeColor = Color.White;
+            btnFiltrar.Location = new Point(800, 38);
+            btnFiltrar.Margin = new Padding(4, 5, 4, 5);
+            btnFiltrar.Name = "btnFiltrar";
+            btnFiltrar.Size = new Size(133, 46);
+            btnFiltrar.TabIndex = 2;
+            btnFiltrar.Text = "FILTRAR";
+            btnFiltrar.UseVisualStyleBackColor = false;
+            btnFiltrar.Click += btnFiltrar_Click;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(20, 60);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(400, 15);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Nota: Los productos con stock en rojo indican niveles por debajo del mínimo";
+            label2.AutoSize = true;
+            label2.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label2.Location = new Point(27, 92);
+            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(500, 17);
+            label2.TabIndex = 1;
+            label2.Text = "Nota: Los productos con stock en rojo indican niveles por debajo del mínimo";
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(20, 33);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(124, 15);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Filtrar por Categoría:";
+            label1.AutoSize = true;
+            label1.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.Location = new Point(27, 51);
+            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(141, 17);
+            label1.TabIndex = 0;
+            label1.Text = "Filtrar por Categoría:";
             // 
             // frmInventario
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(884, 561);
-            this.Controls.Add(this.dgvInventario);
-            this.Controls.Add(this.grpFiltros);
-            this.Controls.Add(this.panelBotones);
-            this.Controls.Add(this.panelHeader);
-            this.Name = "frmInventario";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Gestión de Inventario - AgroCampo S.A.";
-            this.panelHeader.ResumeLayout(false);
-            this.panelHeader.PerformLayout();
-            this.panelBotones.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvInventario)).EndInit();
-            this.grpFiltros.ResumeLayout(false);
-            this.grpFiltros.PerformLayout();
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
+            ClientSize = new Size(1179, 863);
+            Controls.Add(dgvInventario);
+            Controls.Add(grpFiltros);
+            Controls.Add(panelBotones);
+            Controls.Add(panelHeader);
+            Margin = new Padding(4, 5, 4, 5);
+            Name = "frmInventario";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Gestión de Inventario - AgroCampo S.A.";
+            Load += frmInventario_Load;
+            panelHeader.ResumeLayout(false);
+            panelHeader.PerformLayout();
+            panelBotones.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvInventario).EndInit();
+            grpFiltros.ResumeLayout(false);
+            grpFiltros.PerformLayout();
+            ResumeLayout(false);
 
         }
 
