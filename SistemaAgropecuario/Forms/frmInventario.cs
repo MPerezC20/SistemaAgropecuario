@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using SistemaAgropecuario.Models;
+using SistemaAgropecuario.Data;
+using MySqlConnector;
 
 namespace SistemaAgropecuario.Forms
 {
@@ -13,60 +15,75 @@ namespace SistemaAgropecuario.Forms
         {
             InitializeComponent();
             LlenarCombobox();
-            CargarDatosEjemplo();
+            CargarInventarioBD();
         }
 
         private void LlenarCombobox()
         {
-            cmbCategoria.Items.AddRange(new string[] { "Todas", "Granos", "Hortalizas", "Frutas", "Verduras", "Cereales" });
+            cmbCategoria.Items.AddRange(new string[]
+            {
+                "Todas", "Granos", "Hortalizas", "Frutas", "Verduras", "Cereales"
+            });
         }
 
-        private void CargarDatosEjemplo()
+        private void CargarInventarioBD()
         {
             inventario.Clear();
 
-            inventario.Add(new Inventario
+            try
             {
-                IdInventario = 1,
-                IdProducto = 1,
-                CantidadDisponible = 50,
-                CantidadMinima = 20,
-                CantidadMaxima = 100,
-                Ubicacion = "Almacén A",
-                FechaUltimaActualizacion = DateTime.Now.AddDays(-1)
-            });
+                using (var conn = DatabaseConnection.GetConnection())
+                {
+                    conn.Open();
 
-            inventario.Add(new Inventario
+                    string query = @"
+                        SELECT id_inventario, id_producto, cantidad_disponible,
+                               cantidad_minima, cantidad_maxima, ubicacion,
+                               fecha_ultima_actualizacion
+                        FROM inventario";
+
+                    using (var cmd = new MySqlCommand(query, conn))
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        int iIdInv = reader.GetOrdinal("id_inventario");
+                        int iIdProd = reader.GetOrdinal("id_producto");
+                        int iCantDisp = reader.GetOrdinal("cantidad_disponible");
+                        int iCantMin = reader.GetOrdinal("cantidad_minima");
+                        int iCantMax = reader.GetOrdinal("cantidad_maxima");
+                        int iUbic = reader.GetOrdinal("ubicacion");
+                        int iFecha = reader.GetOrdinal("fecha_ultima_actualizacion");
+
+                        while (reader.Read())
+                        {
+                            inventario.Add(new Inventario
+                            {
+                                IdInventario = reader.GetInt32(iIdInv),
+                                IdProducto = reader.GetInt32(iIdProd),
+                                CantidadDisponible = reader.GetDecimal(iCantDisp),
+                                CantidadMinima = reader.GetDecimal(iCantMin),
+                                CantidadMaxima = reader.GetDecimal(iCantMax),
+                                Ubicacion = reader.IsDBNull(iUbic) ? string.Empty : reader.GetString(iUbic),
+                                FechaUltimaActualizacion = reader.GetDateTime(iFecha)
+                            });
+                        }
+                    }
+                }
+
+                dgvInventario.DataSource = null;
+                dgvInventario.DataSource = inventario;
+            }
+            catch (Exception ex)
             {
-                IdInventario = 2,
-                IdProducto = 2,
-                CantidadDisponible = 15,
-                CantidadMinima = 25,
-                CantidadMaxima = 80,
-                Ubicacion = "Almacén B",
-                FechaUltimaActualizacion = DateTime.Now.AddDays(-2)
-            });
-
-            inventario.Add(new Inventario
-            {
-                IdInventario = 3,
-                IdProducto = 3,
-                CantidadDisponible = 5,
-                CantidadMinima = 15,
-                CantidadMaxima = 50,
-                Ubicacion = "Almacén C",
-                FechaUltimaActualizacion = DateTime.Now.AddDays(-3)
-            });
-
-            dgvInventario.DataSource = null;
-            dgvInventario.DataSource = inventario;
+                MessageBox.Show("Error al cargar inventario: " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnActualizar_Click(object sender, EventArgs e)
         {
-            CargarDatosEjemplo();
+            CargarInventarioBD();
             MessageBox.Show("Inventario actualizado correctamente", "Éxito",
-                          MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnGenerarReporte_Click(object sender, EventArgs e)
@@ -79,17 +96,21 @@ namespace SistemaAgropecuario.Forms
             }
 
             MessageBox.Show($"Reporte de Inventario Generado\n\n" +
-                          $"Total de productos: {inventario.Count}\n" +
-                          $"Productos con stock bajo: {productosStockBajo}\n" +
-                          $"Última actualización: {DateTime.Now}",
-                          "Reporte de Inventario",
-                          MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            $"Total de productos: {inventario.Count}\n" +
+                            $"Productos con stock bajo: {productosStockBajo}\n" +
+                            $"Última actualización: {DateTime.Now}",
+                "Reporte de Inventario",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnFiltrar_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Filtros aplicados correctamente", "Filtros",
-                          MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void frmInventario_Load(object sender, EventArgs e)
+        {
         }
     }
 }

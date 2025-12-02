@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Data.SqlClient;
-using System.Configuration;
+﻿using MySqlConnector;
 
 namespace SistemaAgropecuario.Data
 {
-    public class DatabaseConnection
+    public static class DatabaseConnection
     {
-        private static string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+        private const string connectionString =
+            "server=localhost;port=3306;database=gestion_agricola;user=root;password=1234;SslMode=None;";
 
-        public static SqlConnection GetConnection()
+        public static MySqlConnection GetConnection()
         {
-            return new SqlConnection(connectionString);
+            return new MySqlConnection(connectionString);
         }
     }
 }
